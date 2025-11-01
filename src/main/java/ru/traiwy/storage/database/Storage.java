@@ -1,4 +1,4 @@
-package ru.traiwy.storage;
+package ru.traiwy.storage.database;
 
 import org.bukkit.entity.Player;
 import ru.traiwy.data.ClanData;

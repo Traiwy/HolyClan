@@ -13,7 +13,7 @@ import ru.traiwy.inv.menu.PvpMenu;
 import ru.traiwy.manager.config.ConfigDBManager;
 import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.GuiService;
-import ru.traiwy.storage.MySqlStorage;
+import ru.traiwy.storage.database.MySqlStorage;
 
 public final class HolyClan extends JavaPlugin {
 
@@ -36,7 +36,7 @@ public final class HolyClan extends JavaPlugin {
 
         final PvpMenu pvpMenu = new PvpMenu();
         final PveMenu pveMenu = new PveMenu();
-        final ChooseMenu chooseMenu = new ChooseMenu(vaultEco);
+        final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, mySqlStorage);
         final StartMenu startMenu = new StartMenu(chooseMenu);
 
         getCommand("clan").setExecutor(new OpenCommand(pvpMenu, pveMenu, startMenu));
