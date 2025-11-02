@@ -34,6 +34,47 @@ gui:
       name: Выход из меню
       lore:
 
+  unique_effects:
+    - item: COMPARATOR
+      slot: 46
+      name: Включение нескольких эффектов
+      lore:
+
+    - item: GRAY_DYE
+      slot: 48
+      name: Предыдущая страница
+      lore:
+
+    - item: GREEN_DYE
+      slot: 50
+      name: Вперед
+      lore:
+
+    - item: BARRIER
+      slot: 51
+      name: Отключение всех эффектов
+      lore:
+
+    - item: iron_sword
+      slot: 10
+      name: Клановый эффект
+      lore:
+
+    - item: player_head
+      slot: 4
+      name: Голова создателя
+      lore:
+
+    - item: ARROW
+      slot: 7
+      name: Назад
+      lore:
+
+
+
+
+
+
 
 
 

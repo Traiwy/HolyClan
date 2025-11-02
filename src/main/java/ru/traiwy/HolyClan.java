@@ -2,23 +2,31 @@ package ru.traiwy;
 
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.traiwy.command.OpenCommand;
+import ru.traiwy.command.clan.ClanCommand;
 import ru.traiwy.economy.impl.VaultEco;
+import ru.traiwy.event.PlayerQuitListener;
 import ru.traiwy.inv.choose.ChooseMenu;
 import ru.traiwy.inv.choose.StartMenu;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
 import ru.traiwy.manager.config.ConfigDBManager;
 import ru.traiwy.manager.config.ConfigManager;
+import ru.traiwy.service.ClanService;
 import ru.traiwy.service.GuiService;
+import ru.traiwy.storage.cache.ClanCache;
+import ru.traiwy.storage.database.MySqlConnectionManager;
 import ru.traiwy.storage.database.MySqlStorage;
 
 public final class HolyClan extends JavaPlugin {
 
     @Getter
     private Economy economy;
+    private MySqlStorage mySqlStorage;
+    private MySqlConnectionManager manager;
+
 
     @Override
     public void onEnable() {
@@ -29,25 +37,36 @@ public final class HolyClan extends JavaPlugin {
         final ConfigManager configManager = new ConfigManager(this);
         final ConfigDBManager configDBManager = new ConfigDBManager(this);
 
-        final MySqlStorage mySqlStorage = new MySqlStorage(this);
+
+        manager = new MySqlConnectionManager(this);
+        mySqlStorage = new MySqlStorage(this, manager);
+
+
         final VaultEco vaultEco = new VaultEco(economy);
+        final ClanCache clanCache = new ClanCache();
         configManager.load();
         configDBManager.load();
 
         final PvpMenu pvpMenu = new PvpMenu();
         final PveMenu pveMenu = new PveMenu();
-        final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, mySqlStorage);
+        final ClanService clanService = new ClanService(mySqlStorage, vaultEco, pveMenu, pvpMenu, clanCache);
+        final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, clanService);
         final StartMenu startMenu = new StartMenu(chooseMenu);
 
-        getCommand("clan").setExecutor(new OpenCommand(pvpMenu, pveMenu, startMenu));
+        getCommand("clan").setExecutor(new ClanCommand(this, clanCache, mySqlStorage, startMenu, pveMenu, pvpMenu));
+        getCommand("clan").setTabCompleter(new ClanCommand(this, clanCache, mySqlStorage, startMenu, pveMenu, pvpMenu));
         getServer().getPluginManager().registerEvents(new GuiService(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(clanCache), this);
 
     }
 
     @Override
     public void onDisable() {
-
+        if (mySqlStorage != null) {
+            manager.shutdown();
+        }
     }
+
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -61,3 +80,4 @@ public final class HolyClan extends JavaPlugin {
         return economy != null;
     }
 }
+

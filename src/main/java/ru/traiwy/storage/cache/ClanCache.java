@@ -20,6 +20,10 @@ public class ClanCache {
         cache.values().removeIf(clan -> clan.getId() == id);
     }
 
+    public void removeQuit(String owner){
+        cache.remove(owner);
+    }
+
     public boolean contains(String owner) {
         return cache.containsKey(owner);
     }

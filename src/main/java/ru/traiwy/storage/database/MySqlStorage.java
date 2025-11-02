@@ -1,6 +1,8 @@
 package ru.traiwy.storage.database;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import ru.traiwy.data.ClanData;
 import ru.traiwy.storage.cache.ClanCache;
 
@@ -13,17 +15,21 @@ import java.util.concurrent.Executors;
 public class MySqlStorage implements Storage {
     private final ClanCache clanCache = new ClanCache();
     private final ClanRepository clanRepository;
+    private final JavaPlugin plugin;
+    private final MySqlConnectionManager manager;
     private final ExecutorService executor = Executors.newFixedThreadPool(2);
 
-    public MySqlStorage() {
-        MySqlConnectionManager connectionManager = new MySqlConnectionManager();
-        this.clanRepository = new ClanRepository(connectionManager);
+    public MySqlStorage(JavaPlugin plugin, MySqlConnectionManager manager) {
+        this.plugin = plugin;
+        this.manager = manager;
+        this.clanRepository = new ClanRepository(manager);
     }
 
     @Override
     public CompletableFuture<ClanData> getClan(Player player) {
         ClanData cached = clanCache.get(player.getName());
         if (cached != null) {
+             Bukkit.getLogger().info("Клан найден в БД: " + cached.getOwner() + ", id=" + cached.getId());
             return CompletableFuture.completedFuture(cached);
         }
 

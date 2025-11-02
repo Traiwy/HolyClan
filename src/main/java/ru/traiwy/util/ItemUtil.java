@@ -30,7 +30,6 @@ public class ItemUtil {
         return ItemStackBuilder.of(material)
                 .name(LegacyComponentSerializer.legacyAmpersand().deserialize(name).decoration(TextDecoration.ITALIC, false))
                 .lore(loreComponents)
-                .glow()
                 .build();
     }
 }

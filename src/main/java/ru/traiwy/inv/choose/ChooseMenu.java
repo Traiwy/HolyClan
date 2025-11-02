@@ -49,11 +49,11 @@ public class ChooseMenu implements ClanMenu {
     public void onClick(InventoryClickEvent event) {
         final var item = event.getCurrentItem();
         final Player player = (Player) event.getWhoClicked();
-
+        event.setCancelled(true);
 
         switch (item.getType()) {
             case IRON_SWORD -> clanService.createClan(player, TypeClan.PVP);
-            case IRON_AXE -> clanService.createClan(player, TypeClan.PVE);
+            case IRON_HOE -> clanService.createClan(player, TypeClan.PVE);
             default -> player.sendMessage("§cНеизвестный тип клана!");
         }
     }
