@@ -1,86 +1,160 @@
 gui:
-
-  #item start menu
+ #item start menu
   start:
-    - item: target
+    - id: start_select_type
+      item: target
       slot: 21
       name: Выберите тип клана
       lore:
 
-    - item: paper
+    - id: start_view_list
+      item: paper
       slot: 23
       name: Просмотр списка кланова
       lore:
 
-    - item: arrow
+    - id: start_exit
+      item: arrow
       slot: 44
       name: Выход из меню
       lore:
 
   #item choose menu
   choose:
-    - item: iron_sword
+    - id: choose_pvp
+      item: iron_sword
       slot: 20
       name: PvP клан
       lore:
 
-    - item: iron_hoe
+    - id: choose_pve
+      item: iron_hoe
       slot: 24
       name: PvE клан
       lore:
 
-    - item: arrow
+    - id: choose_exit
+      item: arrow
       slot: 44
       name: Выход из меню
       lore:
 
+  #item effect menu
   unique_effects:
-    - item: COMPARATOR
+    - id: effects_enable_multi
+      item: COMPARATOR
       slot: 46
       name: Включение нескольких эффектов
       lore:
 
-    - item: GRAY_DYE
-      slot: 48
-      name: Предыдущая страница
-      lore:
-
-    - item: GREEN_DYE
-      slot: 50
-      name: Вперед
-      lore:
-
-    - item: BARRIER
-      slot: 51
+    - id: effects_disable_all
+      item: BARRIER
+      slot: 52
       name: Отключение всех эффектов
       lore:
 
-    - item: iron_sword
+    - id: effects_clan_effect
+      item: iron_sword
       slot: 10
       name: Клановый эффект
       lore:
 
-    - item: player_head
+    - id: effects_creator_head
+      item: player_head
       slot: 4
       name: Голова создателя
       lore:
 
-    - item: ARROW
-      slot: 7
+    - id: effects_back
+      item: ARROW
+      slot: 53
       name: Назад
       lore:
 
+  update:
+    - id: update_level_up
+      item: diamond
+      slot: 21
+      name: Повышение уровня клана
+      lore:
 
+    - id: update_points
+      item: emerald
+      slot: 23
+      name: Клановые очки
+      lore:
 
+    - id: update_back
+      item: ARROW
+      slot: 53
+      name: Назад
+      lore:
 
+  treasury:
+    - id: treasury_invest_1m
+      item: green_terracotta
+      slot: 27
+      name: Инвестировать 1м монет
+      lore:
 
+    - id: treasury_invest_100k
+      item: lime_concrete
+      slot: 28
+      name: Инвестировать 100к монет
+      lore:
 
+    - id: treasury_invest_10k
+      item: lime_concrete_powder
+      slot: 29
+      name: Инвестировать 10к монет
+      lore:
 
+    - id: treasury_invest_1k
+      item: lime_wool
+      slot: 30
+      name: Инвестировать 1к монет
+      lore:
 
+    - id: treasury_balance
+      item: gold_ingot
+      slot: 13
+      name: Казна вашего клана
+      lore:
+
+    - id: treasury_withdraw_1k
+      item: red_wool
+      slot: 32
+      name: Скоммуниздить 1к монет
+      lore:
+
+    - id: treasury_withdraw_10k
+      item: red_concrete_powder
+      slot: 33
+      name: Скоммуниздить 10к монет
+      lore:
+
+    - id: treasury_withdraw_100k
+      item: red_concrete
+      slot: 34
+      name: Скоммуниздить 100к монет
+      lore:
+
+    - id: treasury_withdraw_1m
+      item: red_terracotta
+      slot: 35
+      name: Скоммуниздить 1м монет
+      lore:
+
+    - id: treasury_back
+      item: ARROW
+      slot: 53
+      name: Назад
+      lore:
 
   #item PVP clans
   PVP:
-    - item: compass
+    - id: pvp_help
+      item: compass
       slot: 23
       name: "§b⿻ Помощь по клановой системе ⿻"
       lore:
@@ -105,21 +179,24 @@ gui:
         - "§b| /clan home §f— телепортироваться на клан хом"
         - "§b| /clan leave §f— покинуть клан"
 
-    - item: player_head
+    - id: pvp_clan_info
+      item: player_head
       slot: 21
       name: Информация по клану
       lore:
 
-    - item: paper
+    - id: pvp_clan_list
+      item: paper
       slot: 19
       name: "§b⿻ Список всех кланов ⿻"
       lore:
-         - "§b| §fПодробная информация"
-         - "§b| §fпо каждому клану на сервере."
-         - ""
-         - "§b▶ §fНажмите, чтобы открыть раздел"
+        - "§b| §fПодробная информация"
+        - "§b| §fпо каждому клану на сервере."
+        - ""
+        - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: structure_void
+    - id: pvp_disabled_section
+      item: structure_void
       slot: 10
       name: "§4▶ §fЭтот раздел §4недоступен."
       lore:
@@ -127,7 +204,8 @@ gui:
         - "§fТип вашего клана не позволяет"
         - "§fоткрывать этот раздел."
 
-    - item: potion
+    - id: pvp_stack_potions
+      item: potion
       slot: 28
       name: "§b⿻ Стакнуть зелья ⿻"
       lore:
@@ -140,7 +218,8 @@ gui:
         - " "
         - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: chorus_flower
+    - id: pvp_random_event
+      item: chorus_flower
       slot: 25
       name: "§b⿻ Шальной ивент §b⿻"
       lore:
@@ -149,7 +228,8 @@ gui:
         - "§b•§f Награда:§6 {reward}"
         - "§b•§f Статус: {status}"
 
-    - item: end_crystal
+    - id: pvp_upgrade_clan
+      item: end_crystal
       slot: 2
       name: "§b⿻ Прокачать клан ⿻"
       lore:
@@ -165,7 +245,8 @@ gui:
         - " "
         - "§b▶ §bНажмите, чтобы открыть раздел"
 
-    - item: crimson_fungus
+    - id: pvp_unique_effects
+      item: crimson_fungus
       slot: 6
       name: "§6⿻ Уникальные эффекты ⿻"
       lore:
@@ -180,7 +261,8 @@ gui:
         - " "
         - "§6▶ §fНажмите, чтобы открыть раздел"
 
-    - item: totem_of_undying
+    - id: pvp_clan_shop
+      item: totem_of_undying
       slot: 42
       name: "§6⿻ Магазин клана ⿻"
       lore:
@@ -198,7 +280,8 @@ gui:
         - " "
         - "§6▶ §fНажмите, чтобы разблокировать"
 
-    - item: gold_ingot
+    - id: pvp_treasury
+      item: gold_ingot
       slot: 38
       name: "§b⿻ Казна клана ⿻"
       lore:
@@ -212,7 +295,8 @@ gui:
         - ""
         - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: netherite_sword
+    - id: pvp_duel
+      item: netherite_sword
       slot: 16
       name: "§6⿻ Клановый поединок ⿻"
       lore:
@@ -228,20 +312,22 @@ gui:
         - "§6|     §fодна из особенностей конкретного номера «Классика»."
         - "§6|     §fНомер объявляется за 10 минут до начала ивента."
 
-    - item: diamond_horse_armor
+    - id: pvp_captures
+      item: diamond_horse_armor
       slot: 34
       name: Хатынки
       lore:
 
-    - item: arrow
+    - id: pvp_exit
+      item: arrow
       slot: 53
       name: Выйти из меню
       lore:
 
   #item PVE clans
   PVE:
-
-    - item: compass
+    - id: pve_help
+      item: compass
       slot: 23
       name: "§b⿻ Помощь по клановой системе ⿻"
       lore:
@@ -267,22 +353,25 @@ gui:
         - "§b| /clan home §f— телепортироваться на клан хом"
         - "§b| /clan leave §f— покинуть клан"
 
-    - item: player_head
+    - id: pve_clan_info
+      item: player_head
       slot: 21
       name: Информация по клану
       lore:
 
-    - item: paper
+    - id: pve_clan_list
+      item: paper
       slot: 19
       name: "§b⿻ Список всех кланов ⿻"
       lore:
-         - " "
-         - "§b| §fПодробная информация"
-         - "§b| §fпо каждому клану на сервере."
-         - " "
-         - "§b▶ §fНажмите, чтобы открыть раздел"
+        - " "
+        - "§b| §fПодробная информация"
+        - "§b| §fпо каждому клану на сервере."
+        - " "
+        - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: leather_chestplate
+    - id: pve_armor_color
+      item: leather_chestplate
       slot: 10
       name: "§b⿻  Цвет брони ⿻"
       lore:
@@ -293,7 +382,8 @@ gui:
         - " "
         - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: potion
+    - id: pve_stack_potions
+      item: potion
       slot: 28
       name: "§b⿻ Стакнуть зелья ⿻"
       lore:
@@ -306,7 +396,8 @@ gui:
         - " "
         - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: chorus_flower
+    - id: pve_random_event
+      item: chorus_flower
       slot: 25
       name: "§b⿻ Шальной ивент ⿻"
       lore:
@@ -323,7 +414,8 @@ gui:
         - "§b• §fНаграда: §61 очко клана"
         - "§b• §fСтатус: §6Ожидание"
 
-    - item: end_crystal
+    - id: pve_upgrade_clan
+      item: end_crystal
       slot: 2
       name: "§b⿻ Прокачать клан ⿻"
       lore:
@@ -339,8 +431,8 @@ gui:
         - " "
         - "§b▶ §bНажмите, чтобы открыть раздел"
 
-
-    - item: crimson_fungus
+    - id: pve_unique_effects
+      item: crimson_fungus
       slot: 6
       name: "§6⿻ Уникальные эффекты ⿻"
       lore:
@@ -355,7 +447,8 @@ gui:
         - " "
         - "§6▶ §fНажмите, чтобы открыть раздел"
 
-    - item: totem_of_undying
+    - id: pve_clan_shop
+      item: totem_of_undying
       slot: 42
       name: "§6⿻ Магазин клана ⿻"
       lore:
@@ -373,8 +466,8 @@ gui:
         - " "
         - "§6▶ §fНажмите, чтобы разблокировать"
 
-
-    - item: gold_ingot
+    - id: pve_treasury
+      item: gold_ingot
       slot: 38
       name: "§b⿻ Казна клана ⿻"
       lore:
@@ -388,7 +481,8 @@ gui:
         - ""
         - "§b▶ §fНажмите, чтобы открыть раздел"
 
-    - item: structure_void
+    - id: pve_disabled_section_1
+      item: structure_void
       slot: 10
       name: "§4▶ §fЭтот раздел §4недоступен."
       lore:
@@ -396,7 +490,8 @@ gui:
         - "§fТип вашего клана не позволяет"
         - "§fоткрывать этот раздел."
 
-    - item: structure_void
+    - id: pve_disabled_section_2
+      item: structure_void
       slot: 10
       name: "§4▶ §fЭтот раздел §4недоступен."
       lore:
@@ -404,8 +499,8 @@ gui:
         - "§fТип вашего клана не позволяет"
         - "§fоткрывать этот раздел."
 
-    - item: arrow
+    - id: pve_exit
+      item: arrow
       slot: 53
       name: "&4▶ &fЗакрыть меню"
       lore:
-

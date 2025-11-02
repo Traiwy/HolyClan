@@ -12,6 +12,10 @@ import ru.traiwy.inv.choose.ChooseMenu;
 import ru.traiwy.inv.choose.StartMenu;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
+import ru.traiwy.inv.sections.effects.UniqueEffectsMenu;
+import ru.traiwy.inv.sections.treasury.TreasuryMenu;
+import ru.traiwy.inv.sections.treasury.manager.TreasuryManager;
+import ru.traiwy.inv.sections.update.UpdateMenu;
 import ru.traiwy.manager.config.ConfigDBManager;
 import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.ClanService;
@@ -47,7 +51,14 @@ public final class HolyClan extends JavaPlugin {
         configManager.load();
         configDBManager.load();
 
-        final PvpMenu pvpMenu = new PvpMenu();
+        TreasuryManager treasuryManager = new TreasuryManager(economy, vaultEco);
+
+        UniqueEffectsMenu uniqueEffectsMenu = new UniqueEffectsMenu();
+        TreasuryMenu treasuryMenu = new TreasuryMenu(treasuryManager);
+        UpdateMenu updateMenu = new UpdateMenu();
+
+
+        final PvpMenu pvpMenu = new PvpMenu(updateMenu, uniqueEffectsMenu, treasuryMenu);
         final PveMenu pveMenu = new PveMenu();
         final ClanService clanService = new ClanService(mySqlStorage, vaultEco, pveMenu, pvpMenu, clanCache);
         final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, clanService);
@@ -66,6 +77,7 @@ public final class HolyClan extends JavaPlugin {
             manager.shutdown();
         }
     }
+
 
 
     private boolean setupEconomy() {

@@ -51,6 +51,10 @@ public class ConfigManager {
             GUI.PVE.item = parseGuiItem("gui.PVE");
             GUI.START.item = parseGuiItem("gui.start");
             GUI.CHOOSE.item = parseGuiItem("gui.choose");
+            GUI.EFFECTS.item = parseGuiItem("gui.unique_effects");
+            GUI.UPDATE.item = parseGuiItem("gui.update");
+            GUI.TREASURY.item = parseGuiItem("gui.treasury");
+
         } catch (Exception e) {
             Bukkit.getLogger().warning("Config can't parse");
         }
@@ -76,11 +80,24 @@ public class ConfigManager {
         public static class CHOOSE{
             public static List<GuiItem> item;
         }
+
+        public static class EFFECTS{
+            public static List<GuiItem> item;
+        }
+
+        public static class UPDATE{
+            public static List<GuiItem> item;
+        }
+
+        public static class TREASURY{
+            public static List<GuiItem> item;
+        }
     }
 
     @Getter
     @RequiredArgsConstructor
     public static class GuiItem{
+        private final String id;
         private final Material material;
         private final int slot;
         private final String name;
@@ -98,6 +115,7 @@ public class ConfigManager {
 
         for(Map<?, ?> entity : rawList){
             try {
+                final String id = (String) entity.get("id");
                 final String materialName = (String) entity.get("item");
                 final String name = (String) entity.get("name");
                 final List<String> lore = (List) entity.get("lore");
@@ -109,7 +127,7 @@ public class ConfigManager {
                 Material material = Material.matchMaterial(materialName);
                 if (material == null) Bukkit.getLogger().warning("Unknown material in " + path + ": " + materialName);
 
-                guiItems.add(new GuiItem(material, slot, name, lore));
+                guiItems.add(new GuiItem(id, material, slot, name, lore));
             } catch (Exception e) {
                 Bukkit.getLogger().warning("Error parse");
             }
