@@ -21,6 +21,7 @@ import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.ClanService;
 import ru.traiwy.service.GuiService;
 import ru.traiwy.storage.cache.ClanCache;
+import ru.traiwy.storage.database.ClanRepository;
 import ru.traiwy.storage.database.MySqlConnectionManager;
 import ru.traiwy.storage.database.MySqlStorage;
 
@@ -41,15 +42,17 @@ public final class HolyClan extends JavaPlugin {
         final ConfigManager configManager = new ConfigManager(this);
         final ConfigDBManager configDBManager = new ConfigDBManager(this);
 
+        configManager.load();
+        configDBManager.load();
 
-        manager = new MySqlConnectionManager(this);
+        manager = new MySqlConnectionManager(this, manager);
         mySqlStorage = new MySqlStorage(this, manager);
+        final ClanRepository clanRepository = new ClanRepository(manager);
 
 
         final VaultEco vaultEco = new VaultEco(economy);
         final ClanCache clanCache = new ClanCache();
-        configManager.load();
-        configDBManager.load();
+
 
         TreasuryManager treasuryManager = new TreasuryManager(economy, vaultEco);
 

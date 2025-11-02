@@ -25,6 +25,8 @@ public class MySqlStorage implements Storage {
         this.clanRepository = new ClanRepository(manager);
     }
 
+
+
     @Override
     public CompletableFuture<ClanData> getClan(Player player) {
         ClanData cached = clanCache.get(player.getName());

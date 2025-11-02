@@ -40,6 +40,8 @@ tasks {
 
         relocate 'com.zaxxer.hikari', 'ru.traiwy.holyclans.libs.hikari'
         relocate 'com.mysql', 'ru.traiwy.holyclans.libs.mysql'
+
+
     }
 
     build {
@@ -49,7 +51,14 @@ tasks {
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
+    afterEvaluate {
+        jar {
+            destinationDirectory = file('C:\\Users\\zinew\\Desktop\\Сборка 1.20\\plugins')
+        }
+    }
+
 }
+
 
 def targetJavaVersion = 17
 java {

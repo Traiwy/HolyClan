@@ -3,10 +3,9 @@ package ru.traiwy.storage.database;
 import ru.traiwy.data.ClanData;
 import ru.traiwy.enums.TypeClan;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
+
 
 public class ClanRepository {
      private final MySqlConnectionManager connectionManager;
@@ -14,6 +13,8 @@ public class ClanRepository {
     public ClanRepository(MySqlConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
+
+
 
     public ClanData getByOwner(String owner) {
         final String sql = "SELECT * FROM clans WHERE owner = ?";
