@@ -8,6 +8,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import ru.traiwy.data.ClanData;
+import ru.traiwy.enums.InvestmentType;
 import ru.traiwy.inv.ClanMenu;
 import ru.traiwy.inv.MenuAction;
 import ru.traiwy.inv.sections.treasury.manager.TreasuryManager;
@@ -18,16 +20,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
 public class TreasuryMenu implements ClanMenu {
     private final Inventory inventory = Bukkit.createInventory(this, 54, "Казна клана");
     private final Map<Integer, MenuAction> actions = new HashMap<>();
 
     private final TreasuryManager treasuryManager;
 
+    public TreasuryMenu(TreasuryManager treasuryManager) {
+        this.treasuryManager = treasuryManager;
+        build();
+    }
+
     @Override
     public void open(Player player) {
-        build();
         player.openInventory(inventory);
     }
 
@@ -65,17 +70,17 @@ public class TreasuryMenu implements ClanMenu {
     }
 
     private MenuAction getActionForItem(ConfigManager.GuiItem item){
-        return switch (item.getId()){
-            case "treasury_invest_1m" -> player -> treasuryManager.takeInvestment1M(player);
-            case "treasury_invest_100k" -> player -> treasuryManager.takeInvestment100k(player);
-            case "treasury_invest_10k" -> player -> treasuryManager.takeInvestment10k(player);
-            case "treasury_invest_1k" -> player -> treasuryManager.takeInvestment1k(player);
-            case "treasury_balance" -> player -> testKazna();
-            case "treasury_withdraw_1k" -> player -> testKazna();
-            case "treasury_withdraw_10k" -> player -> testKazna();
-            case "treasury_withdraw_100k" -> player -> testKazna();
-            case "treasury_withdraw_1m" -> player -> testKazna();
-            case "treasury_back" -> player -> testKazna();
+        return switch (item.getSlot()){
+            case 27 -> player -> treasuryManager.takeInvestment(player, InvestmentType.ONE_MILLION);
+            case 28 -> player -> treasuryManager.takeInvestment(player, InvestmentType.ONE_HUNDRED_K);
+            case 29 -> player -> treasuryManager.takeInvestment(player, InvestmentType.TEN_K);
+            case 30 -> player -> treasuryManager.takeInvestment(player, InvestmentType.ONE_K);
+            case 13 -> player -> testKazna();
+            case 32 -> player -> testKazna();
+            case 33 -> player -> testKazna();
+            case 34 -> player -> testKazna();
+            case 35 -> player -> testKazna();
+            case 53 -> player -> testKazna();
 
             default -> player -> {};
         };

@@ -2,6 +2,7 @@ package ru.traiwy.economy.impl;
 
 import lombok.AllArgsConstructor;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -31,8 +32,9 @@ public class VaultEco implements EconomyEditor {
     }
 
     @Override
-    public void withdraw(Player player, double amount) {
-        economy.withdrawPlayer(player, amount);
+    public boolean withdraw(Player player, double amount) {
+        EconomyResponse response = economy.withdrawPlayer(player, amount);
+        return response.transactionSuccess();
     }
 }
 

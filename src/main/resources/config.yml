@@ -151,6 +151,14 @@ gui:
       name: Назад
       lore:
 
+#item SHOP menu
+  shop:
+    - id: treasury_back
+      item: ARROW
+      slot: 53
+      name: Назад
+      lore:
+
   #item PVP clans
   PVP:
     - id: pvp_help
@@ -483,7 +491,7 @@ gui:
 
     - id: pve_disabled_section_1
       item: structure_void
-      slot: 10
+      slot: 16
       name: "§4▶ §fЭтот раздел §4недоступен."
       lore:
         - " "
@@ -492,7 +500,7 @@ gui:
 
     - id: pve_disabled_section_2
       item: structure_void
-      slot: 10
+      slot: 34
       name: "§4▶ §fЭтот раздел §4недоступен."
       lore:
         - " "

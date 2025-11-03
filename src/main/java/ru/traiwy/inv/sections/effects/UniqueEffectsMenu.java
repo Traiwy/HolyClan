@@ -18,9 +18,13 @@ public class UniqueEffectsMenu implements ClanMenu {
     private final static int[] BLUE_PANEL = {45,47,48,49,50,51};
 
     private final Inventory inventory = Bukkit.createInventory(this, 54, "Уникальные эффекты");
+
+    public UniqueEffectsMenu(){
+        build();
+    }
     @Override
     public void open(Player player) {
-        build();
+
         player.openInventory(inventory);
     }
 

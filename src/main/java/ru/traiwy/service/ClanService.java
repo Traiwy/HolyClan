@@ -26,13 +26,13 @@ public class ClanService {
         this.cache = cache;
     }
 
-    public void createClan(Player player, TypeClan type) {
+    public void createClan(Player player, TypeClan type, String clanName) {
         if (!vaultEco.takeMoneyForClanCreation(player)) {
             player.sendMessage("§cНедостаточно средств для создания клана!");
             return;
         }
 
-        ClanData clan = new ClanData(player.getName(), 1, type);
+        ClanData clan = new ClanData(player.getName(), clanName, 0, 0, 1, type);
         storage.addClan(clan);
         openClan(player, type);
         cache.put(clan);
@@ -43,8 +43,8 @@ public class ClanService {
 
     private void openClan(Player player, TypeClan clan){
         switch (clan){
-            case PVP: pvpMenu.open(player);
-            case PVE: pveMenu.open(player);
+            case PVP -> pvpMenu.open(player);
+            case PVE -> pveMenu.open(player);
         }
     }
 }

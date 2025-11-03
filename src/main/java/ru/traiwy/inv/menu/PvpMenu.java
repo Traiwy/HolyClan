@@ -1,6 +1,5 @@
 package ru.traiwy.inv.menu;
 
-import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
 public class PvpMenu implements ClanMenu {
     private final UpdateMenu updateMenu;
     private final UniqueEffectsMenu uniqueEffectsMenu;
@@ -29,9 +27,15 @@ public class PvpMenu implements ClanMenu {
 
     private final Map<Integer, MenuAction> actions = new HashMap<>();
 
+    public PvpMenu(UpdateMenu updateMenu, UniqueEffectsMenu uniqueEffectsMenu, TreasuryMenu treasuryMenu) {
+        this.updateMenu = updateMenu;
+        this.uniqueEffectsMenu = uniqueEffectsMenu;
+        this.treasuryMenu = treasuryMenu;
+        build();
+    }
+
     @Override
     public void open(Player player) {
-        build();
         player.openInventory(inventory);
     }
 
@@ -52,6 +56,7 @@ public class PvpMenu implements ClanMenu {
 
     @Override
     public void onClick(InventoryClickEvent event) {
+        if (event.getView().getTopInventory() != inventory) return;
         event.setCancelled(true);
 
         if (event.getCurrentItem() == null) return;
@@ -64,20 +69,20 @@ public class PvpMenu implements ClanMenu {
     }
 
     private MenuAction getActionForItem(ConfigManager.GuiItem item) {
-        return switch (item.getId()){
-            case "pvp_help" -> player -> player.sendMessage("help");
-            case "pvp_clan_info" -> player -> testPvpMenu();
-            case "pvp_clan_list" -> player -> testPvpMenu();
-            case "pvp_disabled_section" -> player -> testPvpMenu();
-            case "pvp_stack_potions" -> player -> testPvpMenu();
-            case "pvp_random_event" -> player -> testPvpMenu();
-            case "pvp_upgrade_clan" -> player -> updateMenu.open(player);
-            case "pvp_unique_effects" -> player -> uniqueEffectsMenu.open(player);
-            case "pvp_clan_shop" -> player -> testPvpMenu();
-            case "pvp_treasury" -> player -> treasuryMenu.open(player);
-            case "pvp_duel" -> player -> testPvpMenu();
-            case "pvp_captures" -> player -> testPvpMenu();
-            case "pvp_exit" -> player -> testPvpMenu();
+        return switch (item.getSlot()){
+            case 23 -> player -> player.sendMessage("help");
+            case 21 -> player -> testPvpMenu();
+            case 19 -> player -> testPvpMenu();
+            case 10 -> player -> testPvpMenu();
+            case 28 -> player -> testPvpMenu();
+            case 25 -> player -> testPvpMenu();
+            case 2 -> player -> updateMenu.open(player);
+            case 6 -> player -> uniqueEffectsMenu.open(player);
+            case 42 -> player -> testPvpMenu();
+            case 38 -> player -> treasuryMenu.open(player);
+            case 16 -> player -> testPvpMenu();
+            case 34 -> player -> testPvpMenu();
+            case 53 -> player -> testPvpMenu();
             default -> player -> {};
         };
     }

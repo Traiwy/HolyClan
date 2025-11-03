@@ -13,11 +13,17 @@ import ru.traiwy.enums.TypeClan;
 public class ClanData {
     private int id;
     private String owner;
+    private String clanName;
+    private long balance;
+    private int point;
     private int level;
     private TypeClan typeClan;
 
-    public ClanData(String owner, int level, TypeClan typeClan){
+    public ClanData(String owner, String clanName,long balance, int point ,int level, TypeClan typeClan){
         this.owner = owner;
+        this.clanName = clanName;
+        this.balance = balance;
+        this.point = point;
         this.level = level;
         this.typeClan = typeClan;
     }

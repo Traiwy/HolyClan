@@ -1,4 +1,4 @@
-package ru.traiwy.inv.sections.update;
+package ru.traiwy.inv.sections.shop;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,46 +16,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UpdateMenu implements ClanMenu{
-    private final Inventory inventory = Bukkit.createInventory(this, 54, "Улучшение клана");
+public class ShopMenu implements ClanMenu {
+    private final static int[] GRAY_PANEL = {0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,45,47,48,49,50,51,52};
+
+    private final Inventory inventory = Bukkit.createInventory(this, 54, "Клановый магазин");
     private final Map<Integer, MenuAction> actions = new HashMap<>();
 
-    public UpdateMenu(){
+    public ShopMenu(){
         build();
     }
 
     @Override
     public void open(Player player) {
-
+        build();
         player.openInventory(inventory);
     }
 
     @Override
     public void build() {
-        for(ConfigManager.GuiItem item : ConfigManager.GUI.UPDATE.item) {
+        for(ConfigManager.GuiItem item : ConfigManager.GUI.SHOP.item){
             final Material material = item.getMaterial();
             final String name = item.getName();
             final List<String> lore = item.getLore();
             final int slot = item.getSlot();
 
-            final ItemStack result = ItemUtil.ItemStack(material, name, lore);
+            ItemStack result = ItemUtil.ItemStack(material, name, lore);
             inventory.setItem(slot, result);
 
             actions.put(slot, getActionForItem(item));
         }
+        fillPanel(Material.GRAY_STAINED_GLASS_PANE, GRAY_PANEL);
     }
 
     @Override
     public void onClick(InventoryClickEvent event) {
         event.setCancelled(true);
-
-        if (event.getCurrentItem() == null) return;
-        final int slot = event.getSlot();
-
-        final MenuAction action = actions.get(slot);
-        if (action != null && event.getWhoClicked() instanceof Player player) {
-            action.execute(player);
-        }
     }
 
     @Override
@@ -63,17 +58,18 @@ public class UpdateMenu implements ClanMenu{
         return inventory;
     }
 
-    private MenuAction getActionForItem(ConfigManager.GuiItem item) {
-        return switch (item.getId()){
-            case "update_level_up" -> player -> updateTestVoid();
-            case "update_points" -> player -> updateTestVoid();
-            case "update_back" -> player -> updateTestVoid();
-            default -> player -> {};
+    public void fillPanel(Material material, int[] panel){
+        for(int slot : panel){
+            ItemStack item = new ItemStack(material);
 
-        };
+            inventory.setItem(slot, item);
+        }
     }
 
-    public void updateTestVoid(){
-        //Реализовать действия повышения уровня клана
+    public MenuAction getActionForItem(ConfigManager.GuiItem item){
+        return switch (item.getId()){
+            case "treasury_back" -> player -> player.closeInventory();
+            default -> player -> {};
+        };
     }
 }

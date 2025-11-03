@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ClanCache {
      private final Map<String, ClanData> cache = new ConcurrentHashMap<>();
 
+
     public ClanData get(String owner) {
         return cache.get(owner);
     }

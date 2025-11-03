@@ -48,6 +48,7 @@ public class MySqlConnectionManager {
                  CREATE TABLE IF NOT EXISTS clans (
                  id int AUTO_INCREMENT PRIMARY KEY,
                  owner VARCHAR(15) UNIQUE NOT NULL, 
+                 clanName VARCHAR(12) NOT NULL, 
                  balance BIGINT DEFAULT 0,
                  point INT DEFAULT 0,
                  level INT DEFAULT 1, 
