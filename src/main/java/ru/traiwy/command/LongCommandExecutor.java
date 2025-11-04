@@ -28,16 +28,14 @@ public abstract class LongCommandExecutor implements TabExecutor {
         return null;
     }
 
-    protected List<String> getFirstAliases(){
+    protected List<String> getFirstAliases() {
         final List<String> result = new ArrayList<>();
-        for(final SubCommandWrapper wrapper : subCommands){
+        for (final SubCommandWrapper wrapper : subCommands) {
             final String alias = wrapper.aliases[0];
             result.add(alias);
         }
         return result;
     }
-
-
 
     @AllArgsConstructor
     @Getter

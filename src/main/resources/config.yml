@@ -155,31 +155,31 @@ gui:
 
   bottled:
     - id: bottled_info
-      item: мед
+      item: honey_bottle
       slot: 39
       name: Стакнуть зелье
       lore:
 
     - id: bottled
-      item: potion[potion_contents={potion:"long_strength"}]
+      item: potion
       slot: 14
       name: Зелье силы
       lore:
 
     - id: bottled_speed
-      item: potion[potion_contents={potion:"speed"}]
+      item: potion
       slot: 23
       name: Зелье скорости
       lore:
 
     - id: bottled_regen
-      item: potion[potion_contents={potion:"regeneration"}]
+      item: potion
       slot: 32
       name: Зелье регенерации
       lore:
 
     - id: bottled_fire
-      item: potion[potion_contents={potion:"fire_resistance"}]
+      item: potion
       slot: 41
       name: Зелье силы
       lore:

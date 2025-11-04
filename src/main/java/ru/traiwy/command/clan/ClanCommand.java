@@ -20,6 +20,7 @@ import ru.traiwy.manager.ChatInputManager;
 import ru.traiwy.storage.cache.ClanCache;
 import ru.traiwy.storage.database.MySqlStorage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClanCommand extends LongCommandExecutor {
@@ -105,8 +106,16 @@ public class ClanCommand extends LongCommandExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) return getFirstAliases();
-
+        if (args.length == 1) {
+            String current = args[0].toLowerCase();
+            List<String> result = new ArrayList<>();
+            for (String alias : getFirstAliases()) {
+                if (alias.toLowerCase().startsWith(current)) {
+                    result.add(alias);
+                }
+            }
+            return result;
+        }
         SubCommandWrapper wrapper = getWrapperFromLabel(args[0]);
         if (wrapper == null) return null;
         return wrapper.getSubCommand().onTabComplete(sender, args);

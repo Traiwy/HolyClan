@@ -40,36 +40,42 @@ public final class HolyClan extends JavaPlugin {
 
         saveDefaultConfig();
         reloadConfig();
-        setupEconomy();
-        final ConfigManager configManager = new ConfigManager(this);
-        final ConfigDBManager configDBManager = new ConfigDBManager(this);
+
+         if (setupEconomy()) {
+             getLogger().info("Economy init");
+         }else {
+             getLogger().warning("❌ Экономика не инициализирована. Некоторые функции будут отключены.");
+
+         }
+        final var configManager = new ConfigManager(this);
+        final var configDBManager = new ConfigDBManager(this);
 
         configManager.load();
         configDBManager.load();
 
         manager = new MySqlConnectionManager(this, manager);
         mySqlStorage = new MySqlStorage(this, manager);
-        final ClanRepository clanRepository = new ClanRepository(manager);
+        final var clanRepository = new ClanRepository(manager);
 
 
-        final VaultEco vaultEco = new VaultEco(economy);
-        final ClanCache clanCache = new ClanCache();
+        final var vaultEco = new VaultEco(economy);
+        final var clanCache = new ClanCache();
 
 
-        TreasuryManager treasuryManager = new TreasuryManager(vaultEco, mySqlStorage, this, clanCache);
+        final var treasuryManager = new TreasuryManager(vaultEco, mySqlStorage, this, clanCache);
 
-        UniqueEffectsMenu uniqueEffectsMenu = new UniqueEffectsMenu();
-        TreasuryMenu treasuryMenu = new TreasuryMenu(treasuryManager);
-        UpdateMenu updateMenu = new UpdateMenu();
-        BottledMenu bottledMenu = new BottledMenu();
+        final var uniqueEffectsMenu = new UniqueEffectsMenu();
+        final var treasuryMenu = new TreasuryMenu(treasuryManager);
+        final var updateMenu = new UpdateMenu();
+        final var bottledMenu = new BottledMenu();
 
 
-        final PvpMenu pvpMenu = new PvpMenu(updateMenu, uniqueEffectsMenu, treasuryMenu, bottledMenu);
-        final PveMenu pveMenu = new PveMenu();
-        ChatInputManager chatInputManager = new ChatInputManager(this);
-        final ClanService clanService = new ClanService(mySqlStorage, vaultEco, pveMenu, pvpMenu, clanCache);
-        final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, clanService, this, chatInputManager);
-        final StartMenu startMenu = new StartMenu(chooseMenu);
+        final var pvpMenu = new PvpMenu(updateMenu, uniqueEffectsMenu, treasuryMenu, bottledMenu);
+        final var pveMenu = new PveMenu();
+        final var chatInputManager = new ChatInputManager(this);
+        final var clanService = new ClanService(mySqlStorage, vaultEco, pveMenu, pvpMenu, clanCache);
+        final var chooseMenu = new ChooseMenu(vaultEco, clanService, this, chatInputManager);
+        final var startMenu = new StartMenu(chooseMenu);
 
         getCommand("clan").setExecutor(new ClanCommand(this, clanCache, mySqlStorage, startMenu, chatInputManager, pveMenu, pvpMenu));
         getServer().getPluginManager().registerEvents(new GuiService(), this);
