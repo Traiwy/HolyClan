@@ -10,6 +10,6 @@ public enum InvestmentType {
     TEN_K(10000),
     ONE_K(1000);
 
-    private final double amount;
-    InvestmentType(double amount) { this.amount = amount; }
+    private final int amount;
+    InvestmentType(int amount) { this.amount = amount; }
 }

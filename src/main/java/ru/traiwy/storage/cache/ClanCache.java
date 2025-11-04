@@ -1,5 +1,6 @@
 package ru.traiwy.storage.cache;
 
+import org.bukkit.Bukkit;
 import ru.traiwy.data.ClanData;
 
 import java.util.Map;
@@ -22,6 +23,7 @@ public class ClanCache {
     }
 
     public void removeQuit(String owner){
+        Bukkit.getLogger().info("Кэш очищен");
         cache.remove(owner);
     }
 

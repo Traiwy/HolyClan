@@ -120,6 +120,7 @@ gui:
       slot: 13
       name: Казна вашего клана
       lore:
+        - "{balance} монеток"
 
     - id: treasury_withdraw_1k
       item: red_wool

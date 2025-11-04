@@ -19,12 +19,12 @@ public class ClanRepository {
     public ClanData getByOwner(String owner) {
         final String sql = "SELECT * FROM clans WHERE owner = ?";
         try (Connection conn = connectionManager.getConnection();
-             PreparedStatement st = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            st.setString(1, owner);
-            try (ResultSet rs = st.executeQuery()) {
+            ps.setString(1, owner);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new ClanData(
+                    ClanData clan = new ClanData(
                             rs.getString("owner"),
                             rs.getString("clanName"),
                             rs.getLong("balance"),
@@ -32,6 +32,8 @@ public class ClanRepository {
                             rs.getInt("level"),
                             TypeClan.valueOf(rs.getString("typeClan"))
                     );
+                    clan.setId(rs.getInt("id"));
+                    return clan;
                 }
             }
         } catch (SQLException e) {
@@ -43,7 +45,7 @@ public class ClanRepository {
     public void insert(ClanData clan) {
         final String sql = "INSERT INTO clans(owner, clanName ,balance, point, level, typeClan) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection conn = connectionManager.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             ps.setString(1, clan.getOwner());
             ps.setString(2, clan.getClanName());

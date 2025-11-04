@@ -36,6 +36,12 @@ public class VaultEco implements EconomyEditor {
         EconomyResponse response = economy.withdrawPlayer(player, amount);
         return response.transactionSuccess();
     }
+
+    @Override
+    public boolean addBalanse(Player player, double amount) {
+        EconomyResponse response = economy.depositPlayer(player, amount);
+        return response.transactionSuccess();
+    }
 }
 
 

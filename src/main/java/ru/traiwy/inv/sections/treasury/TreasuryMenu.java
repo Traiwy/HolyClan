@@ -75,12 +75,12 @@ public class TreasuryMenu implements ClanMenu {
             case 28 -> player -> treasuryManager.takeInvestment(player, InvestmentType.ONE_HUNDRED_K);
             case 29 -> player -> treasuryManager.takeInvestment(player, InvestmentType.TEN_K);
             case 30 -> player -> treasuryManager.takeInvestment(player, InvestmentType.ONE_K);
-            case 13 -> player -> testKazna();
-            case 32 -> player -> testKazna();
-            case 33 -> player -> testKazna();
-            case 34 -> player -> testKazna();
-            case 35 -> player -> testKazna();
-            case 53 -> player -> testKazna();
+            case 13 -> player ->  {};
+            case 32 -> player -> treasuryManager.takeBalanceTreasury(player, InvestmentType.ONE_K);
+            case 33 -> player -> treasuryManager.takeBalanceTreasury(player, InvestmentType.TEN_K);
+            case 34 -> player -> treasuryManager.takeBalanceTreasury(player, InvestmentType.ONE_HUNDRED_K);
+            case 35 -> player -> treasuryManager.takeBalanceTreasury(player, InvestmentType.ONE_MILLION);
+            case 53 -> player -> player.closeInventory();
 
             default -> player -> {};
         };
