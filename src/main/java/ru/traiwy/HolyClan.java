@@ -12,6 +12,7 @@ import ru.traiwy.inv.choose.ChooseMenu;
 import ru.traiwy.inv.choose.StartMenu;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
+import ru.traiwy.inv.sections.bottled.BottledMenu;
 import ru.traiwy.inv.sections.effects.UniqueEffectsMenu;
 import ru.traiwy.inv.sections.treasury.TreasuryMenu;
 import ru.traiwy.inv.sections.treasury.manager.TreasuryManager;
@@ -60,9 +61,10 @@ public final class HolyClan extends JavaPlugin {
         UniqueEffectsMenu uniqueEffectsMenu = new UniqueEffectsMenu();
         TreasuryMenu treasuryMenu = new TreasuryMenu(treasuryManager);
         UpdateMenu updateMenu = new UpdateMenu();
+        BottledMenu bottledMenu = new BottledMenu();
 
 
-        final PvpMenu pvpMenu = new PvpMenu(updateMenu, uniqueEffectsMenu, treasuryMenu);
+        final PvpMenu pvpMenu = new PvpMenu(updateMenu, uniqueEffectsMenu, treasuryMenu, bottledMenu);
         final PveMenu pveMenu = new PveMenu();
         ChatInputManager chatInputManager = new ChatInputManager(this);
         final ClanService clanService = new ClanService(mySqlStorage, vaultEco, pveMenu, pvpMenu, clanCache);

@@ -33,6 +33,7 @@ public class ChatInputManager implements Listener {
 
         BukkitTask task = new BukkitRunnable() {
             int seconds = 0;
+
             @Override
             public void run() {
                 if (!waitingPlayers.containsKey(uuid)) {
@@ -48,6 +49,7 @@ public class ChatInputManager implements Listener {
                 }
 
                 player.sendMessage(prompt);
+
             }
         }.runTaskTimer(plugin, 20L, 20L);
 

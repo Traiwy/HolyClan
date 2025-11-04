@@ -152,6 +152,44 @@ gui:
       name: Назад
       lore:
 
+
+  bottled:
+    - id: bottled_info
+      item: мед
+      slot: 39
+      name: Стакнуть зелье
+      lore:
+
+    - id: bottled
+      item: potion[potion_contents={potion:"long_strength"}]
+      slot: 14
+      name: Зелье силы
+      lore:
+
+    - id: bottled_speed
+      item: potion[potion_contents={potion:"speed"}]
+      slot: 23
+      name: Зелье скорости
+      lore:
+
+    - id: bottled_regen
+      item: potion[potion_contents={potion:"regeneration"}]
+      slot: 32
+      name: Зелье регенерации
+      lore:
+
+    - id: bottled_fire
+      item: potion[potion_contents={potion:"fire_resistance"}]
+      slot: 41
+      name: Зелье силы
+      lore:
+
+    - id: bottled_back
+      item: paper
+      slot: 12
+      name: Информация
+      lore:
+
 #item SHOP menu
   shop:
     - id: treasury_back

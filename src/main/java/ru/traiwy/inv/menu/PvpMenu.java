@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import ru.traiwy.inv.ClanMenu;
 import ru.traiwy.inv.MenuAction;
+import ru.traiwy.inv.sections.bottled.BottledMenu;
 import ru.traiwy.inv.sections.effects.UniqueEffectsMenu;
 import ru.traiwy.inv.sections.treasury.TreasuryMenu;
 import ru.traiwy.inv.sections.update.UpdateMenu;
@@ -23,14 +24,16 @@ public class PvpMenu implements ClanMenu {
     private final UpdateMenu updateMenu;
     private final UniqueEffectsMenu uniqueEffectsMenu;
     private final TreasuryMenu treasuryMenu;
+    private final BottledMenu bottledMenu;
     private final Inventory inventory = Bukkit.createInventory(this, 54, "PVP клан");
 
     private final Map<Integer, MenuAction> actions = new HashMap<>();
 
-    public PvpMenu(UpdateMenu updateMenu, UniqueEffectsMenu uniqueEffectsMenu, TreasuryMenu treasuryMenu) {
+    public PvpMenu(UpdateMenu updateMenu, UniqueEffectsMenu uniqueEffectsMenu, TreasuryMenu treasuryMenu, BottledMenu bottledMenu) {
         this.updateMenu = updateMenu;
         this.uniqueEffectsMenu = uniqueEffectsMenu;
         this.treasuryMenu = treasuryMenu;
+        this.bottledMenu = bottledMenu;
         build();
     }
 
@@ -74,7 +77,7 @@ public class PvpMenu implements ClanMenu {
             case 21 -> player -> testPvpMenu();
             case 19 -> player -> testPvpMenu();
             case 10 -> player -> testPvpMenu();
-            case 28 -> player -> testPvpMenu();
+            case 28 -> player -> bottledMenu.open(player);
             case 25 -> player -> testPvpMenu();
             case 2 -> player -> updateMenu.open(player);
             case 6 -> player -> uniqueEffectsMenu.open(player);

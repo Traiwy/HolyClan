@@ -74,12 +74,18 @@ public class ChooseMenu implements ClanMenu {
 
      private MenuAction getActionForItem(ConfigManager.GuiItem item) {
         return switch (item.getSlot()){
-            case 20 -> player -> chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
+            case 20 -> player ->{
+                player.closeInventory();
+                    chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
                     clanService.createClan(player, TypeClan.PVP, clanName);
                 });
-            case 24 -> player -> chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
+            };
+            case 24 -> player ->{
+                player.closeInventory();
+                chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
                     clanService.createClan(player, TypeClan.PVE, clanName);
                 });
+            };
             case 44 -> player -> player.closeInventory();
             default -> player -> {};
         };

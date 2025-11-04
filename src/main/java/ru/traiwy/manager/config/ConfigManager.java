@@ -55,6 +55,8 @@ public class ConfigManager {
             GUI.UPDATE.item = parseGuiItem("gui.update");
             GUI.TREASURY.item = parseGuiItem("gui.treasury");
             GUI.SHOP.item = parseGuiItem("gui.shop");
+            GUI.BOTTLED.item = parseGuiItem("gui.bottled");
+
 
         } catch (Exception e) {
             Bukkit.getLogger().warning("Config can't parse");
@@ -95,6 +97,9 @@ public class ConfigManager {
         }
 
         public static class SHOP{
+            public static List<GuiItem> item;
+        }
+        public static class BOTTLED{
             public static List<GuiItem> item;
         }
     }
