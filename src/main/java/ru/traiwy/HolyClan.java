@@ -71,7 +71,7 @@ public final class HolyClan extends JavaPlugin {
         final ChooseMenu chooseMenu = new ChooseMenu(vaultEco, clanService, this, chatInputManager);
         final StartMenu startMenu = new StartMenu(chooseMenu);
 
-        getCommand("clan").setExecutor(new ClanCommand(this, clanCache, mySqlStorage, startMenu, pveMenu, pvpMenu));
+        getCommand("clan").setExecutor(new ClanCommand(this, clanCache, mySqlStorage, startMenu, chatInputManager, pveMenu, pvpMenu));
         getServer().getPluginManager().registerEvents(new GuiService(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(clanCache), this);
 

@@ -1,6 +1,5 @@
 package ru.traiwy.inv.choose;
 
-import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import ru.traiwy.data.ClanData;
 import ru.traiwy.economy.impl.VaultEco;
 import ru.traiwy.enums.TypeClan;
 import ru.traiwy.inv.ClanMenu;
@@ -17,8 +15,7 @@ import ru.traiwy.inv.MenuAction;
 import ru.traiwy.manager.ChatInputManager;
 import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.ClanService;
-import ru.traiwy.storage.database.MySqlStorage;
-import ru.traiwy.util.ClanCreateText;
+import ru.traiwy.util.ClanPromptText;
 import ru.traiwy.util.ItemUtil;
 
 import java.util.HashMap;
@@ -76,13 +73,13 @@ public class ChooseMenu implements ClanMenu {
         return switch (item.getSlot()){
             case 20 -> player ->{
                 player.closeInventory();
-                    chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
+                    chatInputManager.waitForInput(player, ClanPromptText.onClanCreateText(), clanName -> {
                     clanService.createClan(player, TypeClan.PVP, clanName);
                 });
             };
             case 24 -> player ->{
                 player.closeInventory();
-                chatInputManager.waitForInput(player, ClanCreateText.onClanCreateText(), clanName -> {
+                chatInputManager.waitForInput(player, ClanPromptText.onClanCreateText(), clanName -> {
                     clanService.createClan(player, TypeClan.PVE, clanName);
                 });
             };

@@ -1,23 +1,22 @@
 package ru.traiwy.command.clan;
 
-import lombok.AllArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.traiwy.command.LongCommandExecutor;
 import ru.traiwy.command.clan.impl.*;
+import ru.traiwy.command.clan.impl.DeleteSubCommand;
 import ru.traiwy.data.ClanData;
 import ru.traiwy.enums.TypeClan;
 import ru.traiwy.inv.choose.StartMenu;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
-import ru.traiwy.manager.config.ConfigDBManager;
+import ru.traiwy.manager.ChatInputManager;
 import ru.traiwy.storage.cache.ClanCache;
 import ru.traiwy.storage.database.MySqlStorage;
 
@@ -28,20 +27,22 @@ public class ClanCommand extends LongCommandExecutor {
     private final ClanCache cache;
     private final MySqlStorage mySqlStorage;
     private final StartMenu startMenu;
+    private final ChatInputManager chatInputManager;
 
     private final PveMenu pveMenu;
     private final PvpMenu pvpMenu;
 
-    public ClanCommand(JavaPlugin plugin, ClanCache cache, MySqlStorage mySqlStorage, StartMenu startMenu, PveMenu pveMenu, PvpMenu pvpMenu){
+    public ClanCommand(JavaPlugin plugin, ClanCache cache, MySqlStorage mySqlStorage, StartMenu startMenu, ChatInputManager chatInputManager, PveMenu pveMenu, PvpMenu pvpMenu) {
         this.plugin = plugin;
         this.cache = cache;
         this.mySqlStorage = mySqlStorage;
         this.startMenu = startMenu;
+        this.chatInputManager = chatInputManager;
         this.pveMenu = pveMenu;
         this.pvpMenu = pvpMenu;
         addSubCommand(new CapturesSubCommand(), new String[]{"captures"}, new Permission("clan.captures"));
         addSubCommand(new ChatSubCommand(), new String[]{"chat"}, new Permission("clan.chat"));
-        addSubCommand(new DeleteSubCommand(), new String[]{"delete"}, new Permission("clan.delete"));
+        addSubCommand(new DeleteSubCommand(chatInputManager, mySqlStorage, cache), new String[]{"delete"}, new Permission("clan.delete"));
         addSubCommand(new GlowSubCommand(), new String[]{"glow"}, new Permission("clan.glow"));
         addSubCommand(new HomeSubCommand(), new String[]{"home"}, new Permission("clan.home"));
         addSubCommand(new InvestSubCommand(), new String[]{"invest"}, new Permission("clan.invest"));
@@ -56,10 +57,11 @@ public class ClanCommand extends LongCommandExecutor {
         addSubCommand(new TakeSubCommand(), new String[]{"take"}, new Permission("clan.take"));
         addSubCommand(new WithdrawSubCommand(), new String[]{"withdraw"}, new Permission("clan.withdraw"));
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(!(sender instanceof Player player)) return false;
-        if(args.length == 0) {
+        if (!(sender instanceof Player player)) return false;
+        if (args.length == 0) {
             ClanData clan = cache.get(player.getName());
             if (clan == null) {
                 Bukkit.getLogger().info("Отправляем запрос в БД....");
@@ -67,14 +69,14 @@ public class ClanCommand extends LongCommandExecutor {
                     if (clanData != null) {
                         cache.put(clanData);
 
-                         Bukkit.getScheduler().runTask(plugin, () -> {
-                             TypeClan typeClan = clanData.getTypeClan();
-                             if (typeClan == TypeClan.PVP) {
-                                 pvpMenu.open(player);
-                             } else if (typeClan == TypeClan.PVE) {
-                                 pveMenu.open(player);
-                             }
-                         });
+                        Bukkit.getScheduler().runTask(plugin, () -> {
+                            TypeClan typeClan = clanData.getTypeClan();
+                            if (typeClan == TypeClan.PVP) {
+                                pvpMenu.open(player);
+                            } else if (typeClan == TypeClan.PVE) {
+                                pveMenu.open(player);
+                            }
+                        });
 
                     } else {
                         Bukkit.getScheduler().runTask(plugin, () -> startMenu.open(player));
@@ -95,7 +97,7 @@ public class ClanCommand extends LongCommandExecutor {
 
         final SubCommandWrapper wrapper = getWrapperFromLabel(args[0]);
 
-        if(wrapper == null) return true;
+        if (wrapper == null) return true;
 
         wrapper.getSubCommand().onExecute(sender, args);
         return true;
@@ -103,12 +105,10 @@ public class ClanCommand extends LongCommandExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(args.length == 1){
-            return getFirstAliases();
-        }
-        final SubCommandWrapper wrapper = getWrapperFromLabel(args[0]);
-        if(wrapper == null) return null;
+        if (args.length == 1) return getFirstAliases();
 
-         return wrapper.getSubCommand().onTabComplete(sender, args);
+        SubCommandWrapper wrapper = getWrapperFromLabel(args[0]);
+        if (wrapper == null) return null;
+        return wrapper.getSubCommand().onTabComplete(sender, args);
     }
 }

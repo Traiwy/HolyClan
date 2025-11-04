@@ -1,6 +1,7 @@
 package ru.traiwy.manager;
 
 import lombok.AllArgsConstructor;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import ru.traiwy.util.ClanPromptText;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +58,7 @@ public class ChatInputManager implements Listener {
         repeatingTasks.put(uuid, task);
     }
 
+
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
@@ -80,5 +83,15 @@ public class ChatInputManager implements Listener {
         waitingPlayers.remove(uuid);
         BukkitTask task = repeatingTasks.remove(uuid);
         if (task != null) task.cancel();
+    }
+
+    public void cancelPrompt(Player player) {
+        UUID uuid = player.getUniqueId();
+
+        waitingPlayers.remove(uuid);
+
+        BukkitTask task = repeatingTasks.remove(uuid);
+        if (task != null) task.cancel();
+
     }
 }
