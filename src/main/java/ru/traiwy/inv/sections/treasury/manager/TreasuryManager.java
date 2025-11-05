@@ -1,23 +1,20 @@
 package ru.traiwy.inv.sections.treasury.manager;
 
-import com.mysql.cj.BindValue;
 import lombok.AllArgsConstructor;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 import ru.traiwy.data.ClanData;
 import ru.traiwy.economy.impl.VaultEco;
 import ru.traiwy.enums.InvestmentType;
 import ru.traiwy.storage.cache.ClanCache;
-import ru.traiwy.storage.database.MySqlStorage;
+import ru.traiwy.storage.database.clans.ClanStorage;
 
 @AllArgsConstructor
 public class TreasuryManager {
 
     private final VaultEco vaultEco;
-    private final MySqlStorage mySqlStorage;
+    private final ClanStorage clanStorage;
     private final JavaPlugin plugin;
     private final ClanCache clanCache;
 
@@ -34,7 +31,7 @@ public class TreasuryManager {
         if (clanData != null) {
             processInvestment(player, clanData, amount);
         } else {
-            mySqlStorage.getClan(player).thenAccept(loadedClan -> {
+            clanStorage.getClan(player).thenAccept(loadedClan -> {
                 if (loadedClan != null) {
                     clanCache.put(loadedClan);
                     processInvestment(player, loadedClan, amount);
@@ -52,7 +49,7 @@ public class TreasuryManager {
         if(clanData != null){
             processTakeBalanceTreasury(player, clanData, amount);
         } else {
-            mySqlStorage.getClan(player).thenAccept(loadedClan -> {
+            clanStorage.getClan(player).thenAccept(loadedClan -> {
                 if (loadedClan != null) {
                     clanCache.put(loadedClan);
                     processTakeBalanceTreasury(player, loadedClan, amount);
@@ -77,7 +74,7 @@ public class TreasuryManager {
         clanCache.put(clanData);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            mySqlStorage.updateClan(clanData);
+            clanStorage.updateClan(clanData);
         });
 
         player.sendMessage("§aВы сняли с казны: " + amount + " монеток.");
@@ -94,7 +91,7 @@ public class TreasuryManager {
         clanCache.put(clanData);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            mySqlStorage.updateClan(clanData);
+            clanStorage.updateClan(clanData);
         });
 
         player.sendMessage("§aВы вложили " + amount + " в казну!");

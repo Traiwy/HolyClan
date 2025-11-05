@@ -7,10 +7,10 @@ import ru.traiwy.enums.TypeClan;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
 import ru.traiwy.storage.cache.ClanCache;
-import ru.traiwy.storage.database.MySqlStorage;
+import ru.traiwy.storage.database.clans.ClanStorage;
 
 public class ClanService {
-    private final MySqlStorage storage;
+    private final ClanStorage storage;
     private final VaultEco vaultEco;
 
     private final PveMenu pveMenu;
@@ -18,7 +18,7 @@ public class ClanService {
 
     private final ClanCache cache;
 
-    public ClanService(MySqlStorage storage, VaultEco vaultEco, PveMenu pveMenu, PvpMenu pvpMenu, ClanCache cache) {
+    public ClanService(ClanStorage storage, VaultEco vaultEco, PveMenu pveMenu, PvpMenu pvpMenu, ClanCache cache) {
         this.storage = storage;
         this.vaultEco = vaultEco;
         this.pveMenu = pveMenu;

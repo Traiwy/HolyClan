@@ -60,12 +60,39 @@ public class MySqlConnectionManager {
                  clan_id int NOT NULL,
                  FOREIGN KEY (clan_id)  REFERENCES clans(id))""";
 
+
+         final String effectPvpTable = """
+                 CREATE TABLE IF NOT EXISTS effectPvpTable (
+                     clan_id INT PRIMARY KEY,
+                     effectType VARCHAR(32) NOT NULL,
+                     active INT DEFAULT 0,
+                     level INT DEFAULT 1,
+                     start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                     end_time DATETIME NULL,
+                     FOREIGN KEY (clan_id) REFERENCES clans(id)
+                 );
+                 """;
+
+         final String effectPveTable = """
+                 CREATE TABLE IF NOT EXISTS effectPveTable (
+                     clan_id INT PRIMARY KEY,
+                     effectType VARCHAR(32) NOT NULL,
+                     active INT DEFAULT 0,
+                     level INT DEFAULT 1,
+                     start_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+                     end_time DATETIME NULL,
+                     FOREIGN KEY (clan_id) REFERENCES clans(id)
+                 );
+                 """;
+
          try (final Connection conn = getConnection();
               final Statement st = conn.createStatement()) {
              st.executeUpdate(clanTable);
              st.executeUpdate(memberTable);
+             st.executeUpdate(effectPvpTable);
+             st.executeUpdate(effectPveTable);
          } catch (SQLException e) {
-                e.printStackTrace();
+             e.printStackTrace();
              Bukkit.getLogger().warning("DataBase is not created!!");
          }
      }

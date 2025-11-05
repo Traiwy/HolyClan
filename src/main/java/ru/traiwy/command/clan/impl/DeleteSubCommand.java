@@ -1,25 +1,24 @@
 package ru.traiwy.command.clan.impl;
 
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import ru.traiwy.command.SubCommand;
 import ru.traiwy.data.ClanData;
 import ru.traiwy.manager.ChatInputManager;
 import ru.traiwy.storage.cache.ClanCache;
-import ru.traiwy.storage.database.MySqlStorage;
+import ru.traiwy.storage.database.clans.ClanStorage;
 import ru.traiwy.util.ClanPromptText;
 
 import java.util.List;
 
 public class DeleteSubCommand implements SubCommand {
     private final ChatInputManager chatInputManager;
-    private final MySqlStorage mySqlStorage;
+    private final ClanStorage clanStorage;
     private final ClanCache clanCache;
 
-    public DeleteSubCommand(ChatInputManager chatInputManager, MySqlStorage mySqlStorage, ClanCache clanCache) {
+    public DeleteSubCommand(ChatInputManager chatInputManager, ClanStorage clanStorage, ClanCache clanCache) {
         this.chatInputManager = chatInputManager;
-        this.mySqlStorage = mySqlStorage;
+        this.clanStorage = clanStorage;
         this.clanCache = clanCache;
 
     }
@@ -50,7 +49,7 @@ public class DeleteSubCommand implements SubCommand {
     }
 
     private void deleteClan(Player player, ClanData clanData){
-        mySqlStorage.removeClan(clanData.getId());
+        clanStorage.removeClan(clanData.getId());
         clanCache.remove(clanData.getId());
         player.sendMessage("Клан успешно удалён");
     }

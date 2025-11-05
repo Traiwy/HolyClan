@@ -1,7 +1,9 @@
-package ru.traiwy.storage.database;
+package ru.traiwy.storage.database.clans;
 
 import ru.traiwy.data.ClanData;
 import ru.traiwy.enums.TypeClan;
+import ru.traiwy.storage.database.MySqlConnectionManager;
+import ru.traiwy.storage.database.Storage;
 
 import java.sql.*;
 
@@ -13,8 +15,6 @@ public class ClanRepository {
     public ClanRepository(MySqlConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
-
-
 
     public ClanData getByOwner(String owner) {
         final String sql = "SELECT * FROM clans WHERE owner = ?";
@@ -67,6 +67,7 @@ public class ClanRepository {
         final String sql = "UPDATE clans SET owner=?, clanName=?, balance=?, point =?, level=?, typeClan=? WHERE id=?";
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, clan.getOwner());
             ps.setString(2, clan.getClanName());
             ps.setLong(3, clan.getBalance());
