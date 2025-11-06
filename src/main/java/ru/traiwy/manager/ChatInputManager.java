@@ -1,7 +1,6 @@
 package ru.traiwy.manager;
 
 import lombok.AllArgsConstructor;
-import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +10,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import ru.traiwy.util.ClanPromptText;
 
 import java.util.HashMap;
 import java.util.Map;

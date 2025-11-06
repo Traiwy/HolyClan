@@ -74,7 +74,7 @@ public class TreasuryManager {
         clanCache.put(clanData);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            clanStorage.updateClan(clanData);
+            clanStorage.updateData(clanData);
         });
 
         player.sendMessage("§aВы сняли с казны: " + amount + " монеток.");
@@ -91,7 +91,7 @@ public class TreasuryManager {
         clanCache.put(clanData);
 
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            clanStorage.updateClan(clanData);
+            clanStorage.updateData(clanData);
         });
 
         player.sendMessage("§aВы вложили " + amount + " в казну!");

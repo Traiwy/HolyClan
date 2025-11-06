@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MemberData {
     private String member;
-    private int clan_id;
+    private int clanId;
 
 }

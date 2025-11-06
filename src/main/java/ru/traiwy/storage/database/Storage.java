@@ -2,7 +2,6 @@ package ru.traiwy.storage.database;
 
 import org.bukkit.entity.Player;
 import ru.traiwy.data.ClanData;
-import ru.traiwy.data.EffectData;
 
 import java.util.concurrent.CompletableFuture;
 

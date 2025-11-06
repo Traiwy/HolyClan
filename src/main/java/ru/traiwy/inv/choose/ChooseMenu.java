@@ -15,7 +15,6 @@ import ru.traiwy.inv.MenuAction;
 import ru.traiwy.manager.ChatInputManager;
 import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.ClanService;
-import ru.traiwy.util.ClanPromptText;
 import ru.traiwy.util.ItemUtil;
 
 import java.util.HashMap;
@@ -73,13 +72,13 @@ public class ChooseMenu implements ClanMenu {
         return switch (item.getSlot()){
             case 20 -> player ->{
                 player.closeInventory();
-                    chatInputManager.waitForInput(player, ClanPromptText.onClanCreateText(), clanName -> {
+                    chatInputManager.waitForInput(player, ConfigManager.MESSAGE.createClan, clanName -> {
                     clanService.createClan(player, TypeClan.PVP, clanName);
                 });
             };
             case 24 -> player ->{
                 player.closeInventory();
-                chatInputManager.waitForInput(player, ClanPromptText.onClanCreateText(), clanName -> {
+                chatInputManager.waitForInput(player, ConfigManager.MESSAGE.createClan, clanName -> {
                     clanService.createClan(player, TypeClan.PVE, clanName);
                 });
             };

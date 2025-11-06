@@ -33,7 +33,7 @@ public class ClanService {
         }
 
         ClanData clan = new ClanData(player.getName(), clanName, 0, 0, 1, type);
-        storage.addClan(clan);
+        storage.addData(clan);
         openClan(player, type);
         cache.put(clan);
 

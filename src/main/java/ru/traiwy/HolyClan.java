@@ -6,6 +6,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.traiwy.command.clan.ClanCommand;
 import ru.traiwy.economy.impl.VaultEco;
+import ru.traiwy.event.PlayerJoinListener;
 import ru.traiwy.event.PlayerQuitListener;
 import ru.traiwy.inv.choose.ChooseMenu;
 import ru.traiwy.inv.choose.StartMenu;
@@ -17,6 +18,7 @@ import ru.traiwy.inv.sections.treasury.TreasuryMenu;
 import ru.traiwy.inv.sections.treasury.manager.TreasuryManager;
 import ru.traiwy.inv.sections.update.UpdateMenu;
 import ru.traiwy.manager.ChatInputManager;
+import ru.traiwy.manager.InviteManager;
 import ru.traiwy.manager.config.ConfigDBManager;
 import ru.traiwy.manager.config.ConfigManager;
 import ru.traiwy.service.ClanService;
@@ -75,12 +77,14 @@ public final class HolyClan extends JavaPlugin {
         final var clanService = new ClanService(clanStorage, vaultEco, pveMenu, pvpMenu, clanCache);
         final var chooseMenu = new ChooseMenu(vaultEco, clanService, this, chatInputManager);
         final var startMenu = new StartMenu(chooseMenu);
+        final var inviteManager = new InviteManager();
 
-        getCommand("clan").setExecutor(new ClanCommand(this, clanCache, clanStorage, startMenu, chatInputManager, pveMenu, pvpMenu));
+        getCommand("clan").setExecutor(new ClanCommand(this, clanCache, clanStorage, startMenu, chatInputManager, clanRepository, inviteManager, pveMenu, pvpMenu));
         getServer().getPluginManager().registerEvents(new GuiService(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(clanCache), this);
 
         getServer().getPluginManager().registerEvents(chatInputManager, this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(clanRepository, clanCache), this);
 
     }
 

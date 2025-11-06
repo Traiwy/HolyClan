@@ -1,8 +1,11 @@
 package ru.traiwy.manager.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.logging.log4j.message.Message;
+import org.apache.logging.log4j.spi.MessageFactory2Adapter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -43,10 +46,10 @@ public class ConfigManager {
 
 
 
-    private void parse(){
-        //ConfigurationSection section = config.getConfigurationSection("gui");
-        //isSectionNull(section);
-        try{
+    private void parse() {
+        ConfigurationSection section = config.getConfigurationSection("message");
+        isSectionNull(section);
+        try {
             GUI.PVP.item = parseGuiItem("gui.PVP");
             GUI.PVE.item = parseGuiItem("gui.PVE");
             GUI.START.item = parseGuiItem("gui.start");
@@ -57,6 +60,10 @@ public class ConfigManager {
             GUI.SHOP.item = parseGuiItem("gui.shop");
             GUI.BOTTLED.item = parseGuiItem("gui.bottled");
 
+            MESSAGE.createClan = section.getString("createClan");
+            MESSAGE.deleteClan = section.getString("deleteClan");
+            MESSAGE.inviteMessage = section.getString("inviteMessage");
+            MESSAGE.inviteSentMessage = section.getString("inviteSentMessage");
 
         } catch (Exception e) {
             Bukkit.getLogger().warning("Config can't parse");
@@ -102,6 +109,15 @@ public class ConfigManager {
         public static class BOTTLED{
             public static List<GuiItem> item;
         }
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class MESSAGE{
+        public static  String createClan;
+        public static String deleteClan;
+        public static String inviteMessage;
+        public static String inviteSentMessage;
     }
 
     @Getter

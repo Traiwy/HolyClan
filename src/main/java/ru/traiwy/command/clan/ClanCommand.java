@@ -17,7 +17,9 @@ import ru.traiwy.inv.choose.StartMenu;
 import ru.traiwy.inv.menu.PveMenu;
 import ru.traiwy.inv.menu.PvpMenu;
 import ru.traiwy.manager.ChatInputManager;
+import ru.traiwy.manager.InviteManager;
 import ru.traiwy.storage.cache.ClanCache;
+import ru.traiwy.storage.database.clans.ClanRepository;
 import ru.traiwy.storage.database.clans.ClanStorage;
 
 import java.util.ArrayList;
@@ -29,23 +31,27 @@ public class ClanCommand extends LongCommandExecutor {
     private final ClanStorage clanStorage;
     private final StartMenu startMenu;
     private final ChatInputManager chatInputManager;
+    private final ClanRepository clanRepository;
+    private final InviteManager inviteManager;
 
     private final PveMenu pveMenu;
     private final PvpMenu pvpMenu;
 
-    public ClanCommand(JavaPlugin plugin, ClanCache cache, ClanStorage clanStorage, StartMenu startMenu, ChatInputManager chatInputManager, PveMenu pveMenu, PvpMenu pvpMenu) {
+    public ClanCommand(JavaPlugin plugin, ClanCache cache, ClanStorage clanStorage, StartMenu startMenu, ChatInputManager chatInputManager, ClanRepository clanRepository, InviteManager inviteManager, PveMenu pveMenu, PvpMenu pvpMenu) {
         this.plugin = plugin;
         this.cache = cache;
         this.clanStorage = clanStorage;
         this.startMenu = startMenu;
         this.chatInputManager = chatInputManager;
+        this.clanRepository = clanRepository;
+        this.inviteManager = inviteManager;
         this.pveMenu = pveMenu;
         this.pvpMenu = pvpMenu;
-        addSubCommand(new CapturesSubCommand(), new String[]{"captures"}, new Permission("clan.captures"));
         addSubCommand(new ChatSubCommand(), new String[]{"chat"}, new Permission("clan.chat"));
         addSubCommand(new DeleteSubCommand(chatInputManager, clanStorage, cache), new String[]{"delete"}, new Permission("clan.delete"));
         addSubCommand(new GlowSubCommand(), new String[]{"glow"}, new Permission("clan.glow"));
         addSubCommand(new HomeSubCommand(), new String[]{"home"}, new Permission("clan.home"));
+        addSubCommand(new InviteSubCommand(clanRepository, cache, plugin, inviteManager), new String[]{"invite"}, new Permission("clan.invite"));
         addSubCommand(new InvestSubCommand(), new String[]{"invest"}, new Permission("clan.invest"));
         addSubCommand(new KickSubCommand(), new String[]{"kick"}, new Permission("clan.kick"));
         addSubCommand(new LeaveSubCommand(), new String[]{"leave"}, new Permission("clan.leave"));
@@ -53,10 +59,10 @@ public class ClanCommand extends LongCommandExecutor {
         addSubCommand(new MemberSubCommand(), new String[]{"member"}, new Permission("clan.member"));
         addSubCommand(new MoneySubCommand(), new String[]{"money"}, new Permission("clan.money"));
         addSubCommand(new NewLeaderSubCommand(), new String[]{"newleader"}, new Permission("clan.newleader"));
-        addSubCommand(new PvpSubCommand(), new String[]{"pvp"}, new Permission("clan.pvp"));
         addSubCommand(new SethomeSubCommand(), new String[]{"sethome"}, new Permission("clan.sethome"));
         addSubCommand(new TakeSubCommand(), new String[]{"take"}, new Permission("clan.take"));
         addSubCommand(new WithdrawSubCommand(), new String[]{"withdraw"}, new Permission("clan.withdraw"));
+        addSubCommand(new AcceptSubCommand(inviteManager, clanRepository), new String[]{"accept"}, new Permission("clan.accept"));
     }
 
     @Override
